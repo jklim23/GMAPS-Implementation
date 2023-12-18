@@ -61,7 +61,7 @@ public class MouseClick : MonoBehaviour
                     hit.transform.GetComponent<Renderer>().material = cantHoverMaterial;//change material color
                     hit.transform.GetComponent<objectFunctions>().IsSizableTrue();//set bool to true
                     Vector3 hitScale = hit.transform.GetComponent<objectFunctions>().scale;//set the scale of the object to a variable
-                    hit.transform.localScale = new Vector3(hitScale.x,hitScale.y,hitScale.z);
+                    hit.transform.localScale = new Vector3(hitScale.x,hitScale.y,hitScale.z);//change object scale
                 }
 
             }
