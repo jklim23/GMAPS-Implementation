@@ -13,7 +13,7 @@ public class SelectionManager : MonoBehaviour
     private float MouseDragSpeed = 0.1f;
     private Vector3 velocity = Vector3.zero;
     private WaitForFixedUpdate WaitForFixedUpdate = new WaitForFixedUpdate();
-
+    public Material hoverColor;
     private void Awake()
     {
         cam = Camera.main;
@@ -49,6 +49,8 @@ public class SelectionManager : MonoBehaviour
     {
         float originalDistance = Vector3.Distance(gameObject.transform.position, cam.transform.position);
         gameObject.TryGetComponent<Rigidbody>(out var rb);
+        Material originalcolor = gameObject.GetComponent<Renderer>().material;
+
         while (mouseclick.ReadValue<float>() != 0)
         {
             Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -56,15 +58,19 @@ public class SelectionManager : MonoBehaviour
             {
                 Vector3 direction = ray.GetPoint(originalDistance) - gameObject.transform.position;
                 rb.velocity = direction * MouseDragPhysicsSpeed;
-                
+                gameObject.GetComponent<Renderer>().material = hoverColor;
                 yield return WaitForFixedUpdate;
             }
-            else
+            else//if no rigidbody then use vector3 movement
             {
                 gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, ray.GetPoint(originalDistance),ref velocity, MouseDragSpeed);
                 
                 yield return null;
             }
+        }
+        if(mouseclick.ReadValue<float>() == 0)
+        {
+            gameObject.GetComponent<Renderer>().material = originalcolor;
         }
     }
    
