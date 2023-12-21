@@ -31,6 +31,7 @@ public class SelectionManager : MonoBehaviour
     }
     
 
+    //mouse press function 
     private void mousePress(InputAction.CallbackContext context)
     {
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
